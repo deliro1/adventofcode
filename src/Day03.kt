@@ -18,15 +18,12 @@ fun main() {
                 println("Error: same amount of 0 and 1")
             }
         }
-        println(gamma)
-        println(epsilon)
-        val gammaInt= gamma.joinToString("")
-        val epsilonInt= epsilon.joinToString("")
-        println(gammaInt)
-        println(epsilonInt)
 
+        val gammaInt= gamma.joinToString("").toInt(2)
+        val epsilonInt= epsilon.joinToString("").toInt(2)
 
-        return 0
+        println("Result: $epsilonInt * $gammaInt equals ${epsilonInt * gammaInt}")
+        return epsilonInt * gammaInt
     }
 
     fun part2(input: List<String>): Int {
