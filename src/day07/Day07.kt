@@ -20,8 +20,7 @@ class Day07 {
 
         private fun part1(input: List<String>): Int {
             val inputInt = input[0].split(",").map { it.toInt() }
-            var maxval = findMaxInList(inputInt)
-            //var maxval = inputInt.maxOrNull()?:0
+            var maxval= inputInt.maxOf{it}
             var neededFuel= IntArray(maxval+1)
 
             neededFuel.forEachIndexed { index, k ->
@@ -31,13 +30,12 @@ class Day07 {
                 }
                 neededFuel[index]=summedFuel
             }
-            return findMinInList(neededFuel.toList())
+            return neededFuel.toList().minOf { it }
         }
 
         private fun part2(input: List<String>): Int {
             val inputInt = input[0].split(",").map { it.toInt() }
-            var maxval = findMaxInList(inputInt)
-            //var maxval = inputInt.maxOrNull()?:0
+            var maxval= inputInt.maxOf{it}
             var neededFuel= IntArray(maxval+1)
 
             neededFuel.forEachIndexed { index, k ->
@@ -48,26 +46,7 @@ class Day07 {
                 }
                 neededFuel[index]=summedFuel
             }
-            return findMinInList(neededFuel.toList())
-
+            return neededFuel.toList().minOf { it }
         }
-
-        private fun findMaxInList(inputArray: List<Int>): Int{
-            var maxvalue=0
-                for(element in inputArray){
-                    if(element > maxvalue){
-                        maxvalue=element}
-                }
-            return maxvalue
-        }
-        private fun findMinInList(inputArray: List<Int>): Int{
-            var minvalue=1000000000
-            for(element in inputArray){
-                if(element < minvalue){
-                    minvalue=element}
-            }
-            return minvalue
-        }
-
     }
 }
