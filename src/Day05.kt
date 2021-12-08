@@ -9,7 +9,7 @@ fun main() {
             xStart= it[0]; xEnd= it[2]; yStart= it[1]; yEnd= it[3]
             landscape=horiAndVertiLines(xStart,xEnd, yStart,yEnd,landscape)
         }
-        return sumDanger(landscape)
+        return landscape.sumOf { it.count{element -> element >= 2} }
     }
 
     fun part2(input: List<String>): Int {
@@ -30,8 +30,8 @@ fun main() {
                 }
             }
         }
-
-        return sumDanger(landscape)
+        return landscape.sumOf { it.count{element -> element >= 2} }
+        //return sumDanger(landscape)
     }
 
     val testInput = readInput("Day05_test")
@@ -60,17 +60,6 @@ private fun makeRange(a: Int, b: Int): IntRange{
 private infix fun Int.toward(to: Int): IntProgression {
     val step = if (this > to) -1 else 1
     return IntProgression.fromClosedRange(this, to, step)
-}
-private fun sumDanger(landscape: Array<IntArray>):Int{
-    var dangerZones=0
-    for(row in landscape){
-        for(element in row){
-            if(element >= 2){
-                dangerZones++
-            }
-        }
-    }
-    return dangerZones
 }
 
 private fun horiAndVertiLines(xStart: Int,xEnd: Int, yStart: Int,yEnd: Int,landscape: Array<IntArray>): Array<IntArray>{
