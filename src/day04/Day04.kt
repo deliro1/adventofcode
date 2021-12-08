@@ -1,10 +1,10 @@
-package dayXX
+package day04
 import readInput
 
-class DayXX {
+class Day04 {
     companion object {
 
-        private const val day = "dayXX"
+        private const val day = "day04"
         private val filePath = "$day/${day.capitalize()}"
 
         fun runDay() {
@@ -18,6 +18,12 @@ class DayXX {
         }
 
         fun part1(input: List<String>): Int {
+            val splitInput = input.map { it.split(", ") }
+            val bingoDraws = splitInput.first()
+            val bingoCards = splitInput.drop(2)
+
+            //println(bingoCards)
+
             return 0
         }
 
@@ -25,9 +31,8 @@ class DayXX {
             return 0
         }
 
-    private fun testF(inputArray: List<List<Int>>): Int{
-        return 0
-    }
+        class BingoBoard(number: Number, values: List<String>) {
 
+        }
     }
 }

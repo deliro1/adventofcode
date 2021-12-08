@@ -1,28 +1,31 @@
-class Day01 {
+package day01
+import readInput
 
+class Day01 {
     companion object{
 
-        private const val day = "Day01"
-        private val filePath= "${day.capitalize()}"
+        private const val day = "day01"
+        private val filePath= "$day/${day.capitalize()}"
 
         fun runDay(){
             val testInput = readInput("${filePath}_test")
-            check(part1(testInput) == 7)
-            check(part2(testInput) == 5)
+            //check(part1(testInput) == 7)
+            //check(part2(testInput) == 5)
 
             val input = readInput(filePath)
-            println("Part 1 result for ${day} is: ${part1(input)}")
-            println("Part 2 result for ${day} is: ${part2(input)}")
+            println("Part 1 result for $day is: ${part1(input)}")
+            println("Part 2 result for $day is: ${part2(input)}")
         }
 
         private fun part1(input: List<String>): Int {
             var amount=0
-            for (k in(1..1999)){
+            val leng=input.size-2
+            for (k in(1..leng)){
                 if (input[k]>input[k-1]){
                     amount++
                 }
             }
-            println("Amount of increases: $amount")
+            //println("Amount of increases: $amount")
             return amount
         }
 
@@ -39,7 +42,7 @@ class Day01 {
                 val increa= thisSum > lastSum
                 //println("$lastSum < $thisSum , $increa , makes $increaseAmount, step $k")
             }
-            println("Amount of increases: $increaseAmount")
+            //println("Amount of increases: $increaseAmount")
             return increaseAmount
         }
     }
