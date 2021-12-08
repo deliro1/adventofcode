@@ -30,6 +30,7 @@ fun main() {
                 }
             }
         }
+
         return sumDanger(landscape)
     }
 
@@ -54,11 +55,7 @@ private fun findMaxIn2DList(inputArray: List<List<Int>>): Int{
 }
 
 private fun makeRange(a: Int, b: Int): IntRange{
-    return if (a < b) {
-        (a..b)
-    }else{
-        (b..a)
-    }
+    return if (a < b) (a..b) else (b..a)
 }
 private infix fun Int.toward(to: Int): IntProgression {
     val step = if (this > to) -1 else 1
