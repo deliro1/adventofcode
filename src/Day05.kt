@@ -4,7 +4,7 @@ fun main() {
         val maxvalue=findMaxIn2DList(inputSegmented)
         val landscape = Array(maxvalue) { IntArray(maxvalue) { 0 } }
         var dangerZones=0
-        var xStart=0; var xEnd=0; var yStart=0; var yEnd=0
+        var xStart: Int; var xEnd: Int; var yStart: Int; var yEnd: Int
 
         inputSegmented.forEach{
             xStart= it[0]; xEnd= it[2]; yStart= it[1]; yEnd= it[3]
