@@ -1,6 +1,3 @@
-import org.w3c.dom.ranges.Range
-import java.util.stream.IntStream.range
-
 fun main() {
     fun part1(input: List<String>): Int {
         val inputSegmented = input.map { it.split(","," -> ") }.map{ it.map{str -> str.toInt()}}
@@ -8,7 +5,6 @@ fun main() {
         val landscape = Array(maxvalue) { IntArray(maxvalue) { 0 } }
         var dangerZones=0
         var xStart=0; var xEnd=0; var yStart=0; var yEnd=0
-
 
         inputSegmented.forEach{
             xStart= it[0]; xEnd= it[2]; yStart= it[1]; yEnd= it[3]
