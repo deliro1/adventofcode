@@ -49,6 +49,6 @@ class Day06 {
             }
             return fishAges.sum()
         }
-        
+
     }
 }
