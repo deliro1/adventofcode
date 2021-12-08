@@ -8,8 +8,8 @@ class Day06 {
 
         fun runDay() {
             val testInput = readInput("${filePath}_test")
-            //check(part1(testInput) == 5934)
-            //check(part2(testInput) == 5)
+            check(part1(testInput) == 5934)
+            check(part2(testInput) == 26984457539)
 
             val input = readInput(filePath)
             println("Part 1 result for $day is: ${part1(input)}")
@@ -17,7 +17,7 @@ class Day06 {
         }
 
         private fun part1(input: List<String>): Int {
-            var inputInt=input[0].split(",").map { it.toInt() }.toMutableList()
+            val inputInt=input[0].split(",").map { it.toInt() }.toMutableList()
 
             for (k in 1..80) {
                 var amountNew=0
@@ -34,13 +34,21 @@ class Day06 {
             return inputInt.size
         }
 
-        private fun part2(input: List<String>): Int {
-            return 0
-        }
+        private fun part2(input: List<String>): Long {
+            val inputInt = input[0].split(",").map { it.toInt() }
+            val fishAges = LongArray(9)
+            inputInt.forEach { fishAges[it]++ }
 
-        private fun testF(inputArray: List<List<Int>>): Int{
-            return 0
+            for (k in 0 until 256) {
+                val amountNew = fishAges[0]
+                for (curIndex in 0..7) {
+                    fishAges[curIndex] = fishAges[curIndex + 1]
+                }
+                fishAges[8]= amountNew
+                fishAges[6]+=amountNew
+            }
+            return fishAges.sum()
         }
-
+        
     }
 }
