@@ -25,9 +25,6 @@ class DayXX {
             return 0
         }
 
-    private fun testF(inputArray: List<List<Int>>): Int{
-        return 0
-    }
 
     }
 }

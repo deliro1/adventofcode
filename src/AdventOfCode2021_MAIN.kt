@@ -17,7 +17,7 @@ fun main() {
 //    Day05.runDay()
 //    Day06.runDay()
 //    Day07.runDay()
-    Day08.runDay()
-//    Day09.runDay()
+//    Day08.runDay()
+   Day09.runDay()
 //    Day10.runDay()
 }
