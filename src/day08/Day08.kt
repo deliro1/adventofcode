@@ -40,35 +40,44 @@ class Day08 {
             var cypher = mutableListOf<String>("","","","","","","","","","")
 
             digitsTemplate.forEach {
-                //val digitsStrB = it[0].split(" ").sortedBy {itt-> itt.length }
                 val digitsStr = it[0].split(" ").map() {k-> String(k.toCharArray().apply { sort() }) }.sortedBy { itt-> itt.length }
-
                 cypher[1]=digitsStr[0]
                 cypher[7]=digitsStr[1]
                 cypher[4]=digitsStr[2]
                 cypher[8]=digitsStr[9]
-
-                var AA= Regex("[${digitsStr[1]}]")
-                var CC= cypher[4].replace(Regex("[${cypher[1]}]"),"")
+                var cypherL=cypher.toMutableList()
 
                 digitsStr.forEach{str ->
-                    var A= str.toCharArray()
-                    var B= cypher[1].toCharArray()
-                    var C=A.contains(B)
+                    var strList= str.toList()
+                    if(str.length==5 && strList.containsAll(cypherL[1].toList())) cypherL[3]=str
+                    else if(str.length==5 && strList.containsAll(cypherL[4].toList().minus(cypherL[1].toList()))) cypherL[5]=str
+                    else if(str.length==5 && strList.containsAll(cypherL[8].toList().minus(cypherL[4].toList()))) cypherL[2]=str
 
-                    if(str.length==5 && str.contains(cypher[1])) cypher[3]=str
-                    else if(str.length==5 && str.contains(cypher[4].replace(Regex("[${cypher[1]}]"),""))) cypher[5]=str
-                    else if(str.length==5 && str.contains(cypher[8].replace(Regex("[${cypher[4]}]"),""))) cypher[2]=str
+                    else if(str.length==6 && strList.containsAll(cypherL[8].toList().minus(cypherL[1].toList()))) cypherL[6]=str
+                    else if(str.length==6 && strList.containsAll(cypherL[8].toList().minus(cypherL[5].toList()))) cypherL[0]=str
+                    else if(str.length==6) cypherL[9]=str
+                }
+                val digitsCode = it[1].split(" ").map() {k-> String(k.toCharArray().apply { sort() }) }
 
-                    else if(str.length==6 && str.contains(cypher[8].replace(Regex("[${cypher[1]}]"),""))) cypher[6]=str
-                    else if(str.length==6 && str.contains(cypher[8].replace(Regex("[${cypher[5]}]"),""))) cypher[0]=str
-                    else if(str.length==6) cypher[9]=str
+                var nochnstring=""
+                digitsCode.forEach{code ->
+                    when(code){
+                        cypherL[0] -> nochnstring+="0"
+                        cypherL[1] -> nochnstring+="1"
+                        cypherL[2] -> nochnstring+="2"
+                        cypherL[3] -> nochnstring+="3"
+                        cypherL[4] -> nochnstring+="4"
+                        cypherL[5] -> nochnstring+="5"
+                        cypherL[6] -> nochnstring+="6"
+                        cypherL[7] -> nochnstring+="7"
+                        cypherL[8] -> nochnstring+="8"
+                        cypherL[9] -> nochnstring+="9"
                     }
+                }
+                count += nochnstring.toInt()
 
             }
-                //var digitsInt = mutableListOf<Int>()
-
-            return 61229
+            return count
         }
 
 
