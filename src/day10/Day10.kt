@@ -10,62 +10,55 @@ class Day10 {
         fun runDay() {
             val testInput = readInput("${filePath}_test")
             check(part1(testInput) == 26397)
-            //check(part2(testInput) == 5)
+            check(part2(testInput) == 288957)
 
             val input = readInput(filePath)
-            //println("Part 1 result for $day is: ${part1(input)}")
-            println("Part 2 result for $day is: ${part2(input)}")
+            println("Part 1 result for $day is: ${part1(input)}")
+            //println("Part 2 result for $day is: ${part2(input)}")
         }
 
         fun part1(input: List<String>): Int {
 
-            var score=0
-            input.forEach{line ->
-                var braceCurrent= IntArray(4)
-                line.forEach { symbol ->
-                    when (symbol){
-                        '('-> braceCurrent[0]++
-                        '['-> braceCurrent[1]++
-                        '{'-> braceCurrent[2]++
-                        '<'-> braceCurrent[3]++
+            var lineList=input.toMutableList()
+            var result=0
 
-                        ')'-> {braceCurrent[0]--
-                                    if (braceCurrent[0]<0){
-                                        score +=3
-                                    }
-                                }
-                        ']'-> {braceCurrent[1]--
-                                    if (braceCurrent[1]<0){
-                                        score +=57
-                                    }
-                                }
-                        '}'-> {braceCurrent[2]--
-                                    if (braceCurrent[2]<0){
-                                        score +=1197
-                                    }
-                                }
-                        '>'-> {braceCurrent[3]--
-                                    if (braceCurrent[3]<0){
-                                        score +=25137
-                                    }
-                                }
-                    }
+            lineList.forEachIndexed { lineInx, line ->
+                var oldLength=1
+                var newLength=line.length
+                while (oldLength!=newLength){
+                    lineList[lineInx]=removeChunk(lineList[lineInx])
+                    oldLength=newLength
+                    newLength=lineList[lineInx].length
+                }
+
+                val penalty = when(lineList[lineInx].findAnyOf(listOf(")","]","}",">"))?.second){
+                    ")" -> 3
+                    "]" -> 57
+                    "}" -> 1197
+                    ">" -> 25137
+                    else -> 0
+                }
+                result += penalty
+            }
+            return result
+        }
+
+        private fun removeChunk(line: String): String{
+            var lineOut=line
+            for (char in 0 until line.length-1){
+                if((line[char+1]==line[char].plus(1))
+                    || (line[char]=='[' && line[char+1]==line[char].plus(2))
+                    || (line[char]=='{' && line[char+1]==line[char].plus(2))
+                    || (line[char]=='<' && line[char+1]==line[char].plus(2))){
+                    lineOut=lineOut.removeRange(char,char+2)
+                    break
                 }
             }
-
-            println("")
-            println("")
-
-
-
-            return 26397
+            return lineOut
         }
+
 
         fun part2(input: List<String>): Int {
-            return 0
-        }
-
-        private fun testF(inputArray: List<List<Int>>): Int{
             return 0
         }
 
