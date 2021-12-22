@@ -8,6 +8,7 @@ import day07.Day07
 import day08.Day08
 import day09.Day09
 import day10.Day10
+import day11.Day11
 import day12.Day12
 
 fun main() {
@@ -20,6 +21,7 @@ fun main() {
 //    Day07.runDay()
 //    Day08.runDay()
 //   Day09.runDay()
-    Day10.runDay()
+//    Day10.runDay()
+    Day11.runDay()
 //    Day12.runDay()
 }
