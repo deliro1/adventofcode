@@ -1,6 +1,5 @@
 package day12
 import readInput
-
 class Day12 {
     companion object {
 
@@ -9,7 +8,7 @@ class Day12 {
 
         fun runDay() {
             val testInput = readInput("${filePath}_test")
-            check(part1(testInput) == 10)
+            //check(part1(testInput) == 7)
             //check(part2(testInput) == 5)
 
             val input = readInput(filePath)
@@ -18,11 +17,10 @@ class Day12 {
         }
 
         fun part1(input: List<String>): Int {
-            println("inout")
+            var connections=input.map { it.split("-") }
 
 
-
-            return 10
+            return 0
         }
 
         fun part2(input: List<String>): Int {
@@ -32,4 +30,3 @@ class Day12 {
 
     }
 }
-
