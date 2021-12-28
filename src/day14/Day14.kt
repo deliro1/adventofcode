@@ -41,46 +41,48 @@ class Day14 {
         }
 
         fun part2(input: List<String>): Long {
-            val combinations= input.drop(2).map { it.split(" -> ").toMutableList() }
-            var polymer= input.first()
-            var tempCounter=input.drop(2).map { it.split(" -> ").toMutableList() }
-            tempCounter.forEach{it[1]="0"}
+            val startPolymer= input.first()
+            val inputInstructs= input.drop(2).map { it.split(" -> ").toMutableList() }
+            //var tempCounter=input.drop(2).map { it.split(" -> ").toMutableList() }
+            //tempCounter.forEach{it[1]="0"}
 
-            combinations.forEachIndexed(){ ind, ele ->
-                combinations[ind].add("0")
+            var instructions= mutableListOf<List<String>>()
+            inputInstructs.forEachIndexed() { ind, str ->
+                var addList= emptyList<String>().toMutableList()
+                addList.add(str[0])
+                addList.add(str[0][0] + str[1])
+                addList.add(str[1] + str[0][1])
+                instructions.add(addList)
             }
 
-            val windowedPoly=polymer.windowed(2,1).toMutableList()
-            windowedPoly.forEachIndexed { index, window ->
-                combinations.forEachIndexed() {ind, inst ->
-                    if (window == inst[0]) {
-                        combinations[ind][2]=combinations[ind][2].toInt().plus(1).toString()
+            var addingMap = emptyMap<String, Int>().toMutableMap()
+            inputInstructs.forEach(){ addingMap[it[0]] = 0 }
+
+            var letterCounter = emptyMap<String, Int>().toMutableMap()
+            inputInstructs.forEach(){ letterCounter[it[1]] = 0 }
+            startPolymer.windowed(1,1).forEach { window -> letterCounter.merge(window, 1, Int::plus) }
+
+            var combiCounter = emptyMap<String, Int>().toMutableMap()
+            inputInstructs.forEach(){ combiCounter[it[0]] = 0 }
+            startPolymer.windowed(2,1).forEach { window -> combiCounter.merge(window, 1, Int::plus) }
+
+
+            combiCounter.forEach{ combi ->
+                instructions.forEach { instruct ->
+                    if(instruct[0]==combi.key){
+                        addingMap.merge(instruct[1], 1, Int::plus)
+                        addingMap.merge(instruct[2], 1, Int::plus)
+                        addingMap.merge(instruct[0], -1, Int::plus)
+                        letterCounter.merge(instruct[1][1].toString(), 1, Int::plus)
                     }
                 }
             }
 
-            for(step in 1..10) {
-                var addLocs = mutableListOf<String>()
-
-                combinations.forEach() { combi ->
-                    var firstPartStr = combi[0][0] + combi[1]
-                    var secondPartStr = combi[1] + combi[0][1]
-
-                    tempCounter.forEach {
-                        if (it[0]==firstPartStr){it[1].toInt().plus(combi[2].toInt()).toString()}
-                        if (it[0]==secondPartStr){it[1].toInt().plus(combi[2].toInt()).toString()}
-                    }
-                }
-
-
-                addLocs.forEach() { add ->
-                    combinations.forEachIndexed { ind, combi ->
-                        if (combi[0] == add) {
-                            combinations[ind][2] = combinations[ind][2].toInt().plus(1).toString()
-                        }
-                    }
-                }
+            addingMap.forEach{
+                combiCounter.merge(it.key,it.value, Int::plus)
             }
+            println("")
+
 
 
             return 2188189693529L
