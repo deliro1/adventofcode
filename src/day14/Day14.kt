@@ -8,12 +8,12 @@ class Day14 {
 
         fun runDay() {
             val testInput = readInput("${filePath}_test")
-            //check(part1(testInput) == 1588)
+            check(part1(testInput) == 1588)
             check(part2(testInput) == 2188189693529L)
 
             val input = readInput(filePath)
-            //println("Part 1 result for $day is: ${part1(input)}")
-            //println("Part 2 result for $day is: ${part2(input)}")
+            println("Part 1 result for $day is: ${part1(input)}")
+            println("Part 2 result for $day is: ${part2(input)}")
         }
 
         fun part1(input: List<String>): Int {
@@ -43,8 +43,6 @@ class Day14 {
         fun part2(input: List<String>): Long {
             val startPolymer= input.first()
             val inputInstructs= input.drop(2).map { it.split(" -> ").toMutableList() }
-            //var tempCounter=input.drop(2).map { it.split(" -> ").toMutableList() }
-            //tempCounter.forEach{it[1]="0"}
 
             var instructions= mutableListOf<List<String>>()
             inputInstructs.forEachIndexed() { ind, str ->
@@ -55,37 +53,37 @@ class Day14 {
                 instructions.add(addList)
             }
 
-            var addingMap = emptyMap<String, Int>().toMutableMap()
+            var addingMap = emptyMap<String, Long>().toMutableMap()
             inputInstructs.forEach(){ addingMap[it[0]] = 0 }
 
-            var letterCounter = emptyMap<String, Int>().toMutableMap()
-            inputInstructs.forEach(){ letterCounter[it[1]] = 0 }
-            startPolymer.windowed(1,1).forEach { window -> letterCounter.merge(window, 1, Int::plus) }
+            var letterCounter = emptyMap<String, Long>().toMutableMap()
+            inputInstructs.forEach(){ letterCounter[it[1]] = 0L }
+            startPolymer.windowed(1,1).forEach { window -> letterCounter.merge(window, 1L, Long::plus) }
 
-            var combiCounter = emptyMap<String, Int>().toMutableMap()
+            var combiCounter = emptyMap<String, Long>().toMutableMap()
             inputInstructs.forEach(){ combiCounter[it[0]] = 0 }
-            startPolymer.windowed(2,1).forEach { window -> combiCounter.merge(window, 1, Int::plus) }
+            startPolymer.windowed(2,1).forEach { window -> combiCounter.merge(window, 1, Long::plus) }
 
 
-            combiCounter.forEach{ combi ->
-                instructions.forEach { instruct ->
-                    if(instruct[0]==combi.key){
-                        addingMap.merge(instruct[1], 1, Int::plus)
-                        addingMap.merge(instruct[2], 1, Int::plus)
-                        addingMap.merge(instruct[0], -1, Int::plus)
-                        letterCounter.merge(instruct[1][1].toString(), 1, Int::plus)
+            for (steps in 1..40) {
+                combiCounter.forEach { combi ->
+                    instructions.forEach { instruct ->
+                        if (instruct[0] == combi.key) {
+                            addingMap.merge(instruct[1], combi.value, Long::plus)
+                            addingMap.merge(instruct[2], combi.value, Long::plus)
+                            addingMap.merge(instruct[0], -combi.value, Long::plus)
+                            letterCounter.merge(instruct[1][1].toString(), combi.value.toLong(), Long::plus)
+                        }
                     }
+                }
+                addingMap.forEach {
+                    combiCounter.merge(it.key, it.value, Long::plus)
+                    addingMap[it.key]=0
                 }
             }
 
-            addingMap.forEach{
-                combiCounter.merge(it.key,it.value, Int::plus)
-            }
-            println("")
-
-
-
-            return 2188189693529L
+            var AAA=letterCounter.maxOf { it.value }-letterCounter.minOf { it.value }
+            return letterCounter.maxOf { it.value }-letterCounter.minOf { it.value }
 
         }
     }
